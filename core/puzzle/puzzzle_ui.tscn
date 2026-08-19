@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cik306it4jy7j"]
+
+[ext_resource type="Script" uid="uid://clk1ntudvukst" path="res://puzzzle_ui.gd" id="1_oh5ie"]
+[ext_resource type="Texture2D" uid="uid://rerafcpq2igv" path="res://assets/sprites/assets-dream-pixel/panel-frame.png" id="2_djyjv"]
+[ext_resource type="Script" uid="uid://bmrifb63ovokb" path="res://core/puzzle/arrows_draw.gd" id="3_ytc6r"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i8031"]
+content_margin_left = 14.0
+content_margin_top = 14.0
+content_margin_right = 14.0
+content_margin_bottom = 14.0
+texture = ExtResource("2_djyjv")
+
+[node name="PuzzzleUI" type="CanvasLayer" unique_id=1061834889]
+script = ExtResource("1_oh5ie")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=338824901]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -20.0
+offset_right = 30.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_i8031")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=352701844]
+layout_mode = 2
+
+[node name="Arrows" type="Control" parent="Panel/VBoxContainer" unique_id=1400879624]
+custom_minimum_size = Vector2(180, 32)
+layout_mode = 2
+script = ExtResource("3_ytc6r")
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer" unique_id=1916474485]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8392157, 0.24313726, 0.6627451, 0.5764706)
+theme_override_font_sizes/font_size = 11
+text = "Press E to Exit"
+horizontal_alignment = 1
+vertical_alignment = 2

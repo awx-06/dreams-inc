@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dltoshcxr7nyg"]
+
+[ext_resource type="AudioStream" uid="uid://dwrl1iq1ctjhc" path="res://assets/audio/554427__eminyildirim__ui-futuristic-click.ogg" id="1_gs7vu"]
+
+[node name="Clicks" type="AudioStreamPlayer" unique_id=761934515]
+stream = ExtResource("1_gs7vu")
+volume_db = 20.0

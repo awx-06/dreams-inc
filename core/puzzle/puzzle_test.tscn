@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cdp36lnepvic7"]
+
+[ext_resource type="Script" uid="uid://kaqdk1f0uqli" path="res://puzzle_test.gd" id="1_o5ehc"]
+[ext_resource type="PackedScene" uid="uid://cik306it4jy7j" path="res://core/puzzle/puzzzle_ui.tscn" id="2_airt1"]
+[ext_resource type="PackedScene" uid="uid://deksqm4urundd" path="res://core/graph/dream_tile.tscn" id="3_yicaf"]
+[ext_resource type="Resource" uid="uid://cu34tpscs51uc" path="res://core/puzzle/test_random.tres" id="4_apgex"]
+
+[node name="puzzle_test" type="Node2D" unique_id=1610002369]
+script = ExtResource("1_o5ehc")
+
+[node name="PuzzzleUI" parent="." unique_id=1061834889 instance=ExtResource("2_airt1")]
+
+[node name="DreamTile" parent="." unique_id=1682470856 instance=ExtResource("3_yicaf")]
+puzzleDate = ExtResource("4_apgex")

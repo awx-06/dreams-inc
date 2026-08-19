@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://ui1n1225e2kn"]
+
+[ext_resource type="Texture2D" uid="uid://c3covucksxwac" path="res://icon.svg" id="1_bq184"]
+[ext_resource type="Script" uid="uid://bqn5762g8yopj" path="res://core/player/player.gd" id="1_h46vi"]
+[ext_resource type="Script" uid="uid://bunc4koribosj" path="res://core/player/camera_2d.gd" id="3_ll17t"]
+[ext_resource type="AudioStream" uid="uid://chj3i17yd5xgi" path="res://assets/audio/pickupCoin.ogg" id="4_qjudb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y77fm"]
+radius = 20.0
+
+[node name="Player" type="CharacterBody2D" unique_id=293460119]
+collision_layer = 2
+script = ExtResource("1_h46vi")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1569070518]
+visible = false
+scale = Vector2(0.31999862, 0.31999862)
+texture = ExtResource("1_bq184")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=412841485]
+shape = SubResource("CircleShape2D_y77fm")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=989957731]
+position_smoothing_enabled = true
+script = ExtResource("3_ll17t")
+
+[node name="Move" type="AudioStreamPlayer" parent="." unique_id=5801527]
+stream = ExtResource("4_qjudb")

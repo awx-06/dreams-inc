@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cbgre7pxn2axx"]
+
+[ext_resource type="Script" uid="uid://bgsk2rbjuscd5" path="res://core/ui/client_card.gd" id="1_dyir5"]
+[ext_resource type="Texture2D" uid="uid://bsu2aoqvyquvq" path="res://assets/sprites/assets-dream-pixel/card-frame.png" id="1_e05s7"]
+[ext_resource type="Texture2D" uid="uid://de01l150fn7d1" path="res://assets/sprites/assets-dream-pixel/button-normal.png" id="3_4psjq"]
+[ext_resource type="Texture2D" uid="uid://bm8rorr5mrwe4" path="res://assets/sprites/assets-dream-pixel/button-hover.png" id="4_633xi"]
+[ext_resource type="Texture2D" uid="uid://bt1m2dmbo2uaq" path="res://assets/sprites/assets-dream-pixel/button-disabled.png" id="5_yasmh"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6ebxt"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+texture = ExtResource("1_e05s7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_18h7w"]
+texture = ExtResource("3_4psjq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tu18e"]
+texture = ExtResource("4_633xi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j0tw1"]
+texture = ExtResource("5_yasmh")
+
+[node name="Client Card" type="PanelContainer" unique_id=440127795]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_6ebxt")
+script = ExtResource("1_dyir5")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=589607347]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2063344998]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer" unique_id=398949364]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+
+[node name="Problem" type="Label" parent="MarginContainer/VBoxContainer" unique_id=671534619]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+autowrap_mode = 2
+
+[node name="Meta" type="Label" parent="MarginContainer/VBoxContainer" unique_id=105917747]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+
+[node name="Take" type="Button" parent="MarginContainer/VBoxContainer" unique_id=336777571]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.7176471, 0.5803922, 0.9647059, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxTexture_18h7w")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tu18e")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_j0tw1")
+text = "TAKE"

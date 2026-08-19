@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dn0wurdwppxny"]
+
+[ext_resource type="AudioStream" uid="uid://chj3i17yd5xgi" path="res://assets/audio/pickupCoin.ogg" id="1_0mopx"]
+
+[node name="Move" type="AudioStreamPlayer" unique_id=1657068739]
+stream = ExtResource("1_0mopx")

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dbprhs4dc6fnw"]
+
+[ext_resource type="AudioStream" uid="uid://b4mkpas0eikds" path="res://assets/audio/209570__speedenza__found-in-space-19.ogg" id="1_t0t53"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" unique_id=676163131]
+stream = ExtResource("1_t0t53")
+volume_db = 5.0
+autoplay = true
+parameters/looping = true

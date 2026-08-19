@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://c1xtfeuy6xoer"]
+
+[ext_resource type="Script" uid="uid://ckeu1e3hiesws" path="res://core/ui/result.gd" id="1_rlqnx"]
+[ext_resource type="Texture2D" uid="uid://bsu2aoqvyquvq" path="res://assets/sprites/assets-dream-pixel/card-frame.png" id="2_5uin7"]
+[ext_resource type="Shader" uid="uid://cfpopn07behip" path="res://hub/background.gdshader" id="2_ck11c"]
+[ext_resource type="Texture2D" uid="uid://de01l150fn7d1" path="res://assets/sprites/assets-dream-pixel/button-normal.png" id="4_qrpl0"]
+[ext_resource type="Texture2D" uid="uid://bm8rorr5mrwe4" path="res://assets/sprites/assets-dream-pixel/button-hover.png" id="5_ddsy2"]
+[ext_resource type="Texture2D" uid="uid://bt1m2dmbo2uaq" path="res://assets/sprites/assets-dream-pixel/button-disabled.png" id="6_srdt5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_64aee"]
+shader = ExtResource("2_ck11c")
+shader_parameter/colorA = Color(0.14908284, 0.00017748214, 0.23582673, 1)
+shader_parameter/colorB = Color(0.7, 0.3, 0.4, 1)
+shader_parameter/colorC = Color(0.8099062, 0.24388272, 0.99999994, 1)
+shader_parameter/discomode = false
+shader_parameter/speed = 0.40000001574012
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nxrva"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("2_5uin7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_18h7w"]
+texture = ExtResource("4_qrpl0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tu18e"]
+texture = ExtResource("5_ddsy2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j0tw1"]
+texture = ExtResource("6_srdt5")
+
+[node name="Result" type="Control" unique_id=1640238291]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rlqnx")
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=505090081]
+material = SubResource("ShaderMaterial_64aee")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=765714939]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.47058824)
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=816578513]
+custom_minimum_size = Vector2(0, 100)
+custom_maximum_size = Vector2(-1, 140)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.5
+offset_top = -140.0
+offset_right = 77.5
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_nxrva")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1281984737]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer" unique_id=2130416152]
+layout_mode = 2
+theme_override_font_sizes/font_size = 33
+horizontal_alignment = 1
+
+[node name="Body" type="Label" parent="PanelContainer/VBoxContainer" unique_id=982067062]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+horizontal_alignment = 1
+
+[node name="Back" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1971270487]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.7176471, 0.5803922, 0.9647059, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxTexture_18h7w")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tu18e")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_j0tw1")
+text = "RETURN TO OFFICE"

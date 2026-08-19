@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PuzzleData" format=3 uid="uid://b8k1284860qii"]
+
+[ext_resource type="Script" uid="uid://tn4iclyvjpbt" path="res://core/puzzle/puzzle_data.gd" id="1_u43fj"]
+
+[resource]
+script = ExtResource("1_u43fj")
+fixed = Array[String](["UDULDR"])
+modifier = 3
+metadata/_custom_type_script = "uid://tn4iclyvjpbt"

@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://dlwe8x8bmodlb"]
+
+[ext_resource type="Script" uid="uid://bc7wkaqah00hf" path="res://dreams/dream.gd" id="1_3nv0f"]
+[ext_resource type="PackedScene" uid="uid://deksqm4urundd" path="res://core/graph/dream_tile.tscn" id="2_xu0af"]
+[ext_resource type="PackedScene" uid="uid://cik306it4jy7j" path="res://core/puzzle/puzzzle_ui.tscn" id="3_35m3k"]
+[ext_resource type="Resource" uid="uid://cu34tpscs51uc" path="res://core/puzzle/test_random.tres" id="3_gc1ds"]
+[ext_resource type="PackedScene" uid="uid://ui1n1225e2kn" path="res://core/player/player.tscn" id="3_xu0af"]
+[ext_resource type="PackedScene" uid="uid://x535jjpticid" path="res://core/hazard/enemy.tscn" id="6_4hxmi"]
+
+[node name="Dream" type="Node2D" unique_id=1867178222]
+script = ExtResource("1_3nv0f")
+has_enemy = true
+
+[node name="Tiles" type="Node2D" parent="." unique_id=2006655516]
+
+[node name="DreamTile" parent="Tiles" unique_id=1682470856 instance=ExtResource("2_xu0af")]
+position = Vector2(171, 205)
+start = true
+
+[node name="DreamTile2" parent="Tiles" unique_id=17461954 instance=ExtResource("2_xu0af")]
+position = Vector2(246, 202)
+puzzle = true
+puzzleDate = ExtResource("3_gc1ds")
+
+[node name="PuzzzleUI2" parent="Tiles/DreamTile2" unique_id=1061834889 instance=ExtResource("3_35m3k")]
+
+[node name="DreamTile3" parent="Tiles" unique_id=475179909 instance=ExtResource("2_xu0af")]
+position = Vector2(171, 130)
+
+[node name="DreamTile4" parent="Tiles" unique_id=169763820 instance=ExtResource("2_xu0af")]
+position = Vector2(114, 132)
+puzzle = true
+puzzleDate = ExtResource("3_gc1ds")
+
+[node name="PuzzzleUI" parent="Tiles/DreamTile4" unique_id=1100643159 instance=ExtResource("3_35m3k")]
+
+[node name="DreamTile5" parent="Tiles" unique_id=2044992117 instance=ExtResource("2_xu0af")]
+position = Vector2(112, 67)
+enemy = true
+
+[node name="DreamTile6" parent="Tiles" unique_id=1557175986 instance=ExtResource("2_xu0af")]
+position = Vector2(168, 61)
+
+[node name="Player" parent="." unique_id=293460119 instance=ExtResource("3_xu0af")]
+position = Vector2(324, 182)
+
+[node name="Enemy" parent="." unique_id=43977112 instance=ExtResource("6_4hxmi")]
+position = Vector2(170, 64)

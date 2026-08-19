@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://hnms6h3d4sah"]
+
+[ext_resource type="Script" uid="uid://b7aif2cbkvlvu" path="res://hud.gd" id="1_vgtk0"]
+[ext_resource type="Script" uid="uid://cejrpccn64a38" path="res://core/ui/radar.gd" id="2_rrs5c"]
+[ext_resource type="Script" uid="uid://cnmep25hdbdoq" path="res://core/ui/hearts.gd" id="3_6h4qo"]
+[ext_resource type="Script" uid="uid://c70bku385chg8" path="res://core/ui/time.gd" id="3_6rpl1"]
+[ext_resource type="Script" uid="uid://dgcanvgwgwokk" path="res://core/ui/goals.gd" id="5_0rd6n"]
+
+[node name="HUD" type="CanvasLayer" unique_id=536998226]
+script = ExtResource("1_vgtk0")
+
+[node name="Radar" type="Control" parent="." unique_id=339411858]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -50.0
+offset_right = 20.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("2_rrs5c")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1097873190]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1876794402]
+layout_mode = 2
+
+[node name="Hearts" type="Control" parent="MarginContainer/VBoxContainer" unique_id=1322255267]
+custom_minimum_size = Vector2(10, 24)
+layout_mode = 2
+script = ExtResource("3_6h4qo")
+
+[node name="Time" type="Control" parent="MarginContainer/VBoxContainer" unique_id=192643787]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+script = ExtResource("3_6rpl1")
+
+[node name="Goals" type="Control" parent="MarginContainer/VBoxContainer" unique_id=1813924808]
+custom_minimum_size = Vector2(70, 16)
+layout_mode = 2
+script = ExtResource("5_0rd6n")

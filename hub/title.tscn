@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://bfpvmrwxands"]
+
+[ext_resource type="Script" uid="uid://b1glyswx6fsvm" path="res://hub/title.gd" id="1_6hbvt"]
+[ext_resource type="Shader" uid="uid://cfpopn07behip" path="res://hub/background.gdshader" id="2_18h7w"]
+[ext_resource type="Texture2D" uid="uid://bt1m2dmbo2uaq" path="res://assets/sprites/assets-dream-pixel/button-disabled.png" id="3_18h7w"]
+[ext_resource type="Texture2D" uid="uid://de01l150fn7d1" path="res://assets/sprites/assets-dream-pixel/button-normal.png" id="3_j0tw1"]
+[ext_resource type="Texture2D" uid="uid://bsu2aoqvyquvq" path="res://assets/sprites/assets-dream-pixel/card-frame.png" id="3_u7u7c"]
+[ext_resource type="Texture2D" uid="uid://bm8rorr5mrwe4" path="res://assets/sprites/assets-dream-pixel/button-hover.png" id="4_u7u7c"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n4d7h"]
+shader = ExtResource("2_18h7w")
+shader_parameter/colorA = Color(0.14908284, 0.00017748214, 0.23582673, 1)
+shader_parameter/colorB = Color(0.7, 0.3, 0.4, 1)
+shader_parameter/colorC = Color(0.8099062, 0.24388272, 0.99999994, 1)
+shader_parameter/discomode = false
+shader_parameter/speed = 0.40000001574012
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nxrva"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("3_u7u7c")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_18h7w"]
+texture = ExtResource("3_j0tw1")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tu18e"]
+texture = ExtResource("4_u7u7c")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j0tw1"]
+texture = ExtResource("3_18h7w")
+
+[node name="title" type="Control" unique_id=1951678974]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6hbvt")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=92066155]
+material = SubResource("ShaderMaterial_n4d7h")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="." unique_id=651567733]
+layout_mode = 0
+offset_left = 213.0
+offset_top = 64.0
+offset_right = 466.0
+offset_bottom = 120.0
+theme_override_colors/font_outline_color = Color(0.8339196, 0.09318382, 1.182313, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 55
+text = "REM Solutions"
+horizontal_alignment = 1
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=409891824]
+custom_minimum_size = Vector2(0, 100)
+custom_maximum_size = Vector2(-1, 140)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -109.0
+offset_top = -52.0
+offset_right = 83.0
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.3333334, 1.2452173)
+theme_override_styles/panel = SubResource("StyleBoxTexture_nxrva")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1165066941]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Play" type="Button" parent="Panel/VBoxContainer" unique_id=1690193712]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_18h7w")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tu18e")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_j0tw1")
+text = "BEGIN SHIFT"
+
+[node name="Credits" type="Button" parent="Panel/VBoxContainer" unique_id=1727857112]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_18h7w")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tu18e")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_j0tw1")
+text = "Credit
+"

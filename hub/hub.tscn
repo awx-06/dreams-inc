@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://wq01ukqweoyg"]
+
+[ext_resource type="Script" uid="uid://b3u7xmasrii6v" path="res://hub.gd" id="1_n4d7h"]
+[ext_resource type="Shader" uid="uid://cfpopn07behip" path="res://hub/background.gdshader" id="2_1wrr7"]
+[ext_resource type="Texture2D" uid="uid://rerafcpq2igv" path="res://assets/sprites/assets-dream-pixel/panel-frame.png" id="3_6ebxt"]
+[ext_resource type="Script" uid="uid://cnmep25hdbdoq" path="res://core/ui/hearts.gd" id="4_21dlm"]
+[ext_resource type="Shader" uid="uid://7kwuh0e17uu8" path="res://hub/transition.gdshader" id="4_clbpi"]
+[ext_resource type="Script" uid="uid://duy4ttdchjrrd" path="res://hub/money.gd" id="5_g3elb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n4d7h"]
+shader = ExtResource("2_1wrr7")
+shader_parameter/colorA = Color(0.14908284, 0.00017748214, 0.23582673, 1)
+shader_parameter/colorB = Color(0.7, 0.3, 0.4, 1)
+shader_parameter/colorC = Color(0.8099062, 0.24388272, 0.99999994, 1)
+shader_parameter/discomode = false
+shader_parameter/speed = 0.40000001574012
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_clbpi"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+texture = ExtResource("3_6ebxt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_21dlm"]
+shader = ExtResource("4_clbpi")
+shader_parameter/scanline_strength = 0.18
+shader_parameter/scanline_count = 180.0
+shader_parameter/aberration = 0.8
+shader_parameter/vignette = 0.35
+
+[node name="Hub" type="Control" unique_id=696034808]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n4d7h")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1002360003]
+material = SubResource("ShaderMaterial_n4d7h")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Window" type="PanelContainer" parent="." unique_id=1155781288]
+custom_minimum_size = Vector2(480, 280)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_clbpi")
+
+[node name="MarginContainer" type="MarginContainer" parent="Window" unique_id=1220958982]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window/MarginContainer" unique_id=792894655]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=20548604]
+layout_mode = 2
+alignment = 1
+
+[node name="Hearts" type="Control" parent="Window/MarginContainer/VBoxContainer/HBoxContainer" unique_id=682540511]
+custom_minimum_size = Vector2(400, 16)
+layout_mode = 2
+script = ExtResource("4_21dlm")
+
+[node name="Money" type="Control" parent="Window/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1818608457]
+custom_minimum_size = Vector2(70, 16)
+layout_mode = 2
+script = ExtResource("5_g3elb")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=923308014]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ClientList" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=832922018]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.3
+theme_override_constants/separation = 6
+
+[node name="Shop" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1510400362]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Overlay" type="CanvasLayer" parent="." unique_id=761018236]
+layer = 50
+
+[node name="ColorRect" type="ColorRect" parent="Overlay" unique_id=1516509987]
+material = SubResource("ShaderMaterial_21dlm")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

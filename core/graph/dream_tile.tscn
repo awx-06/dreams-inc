@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://deksqm4urundd"]
+
+[ext_resource type="Script" uid="uid://cw1040tdyqq6g" path="res://core/graph/dream_tile.gd" id="1_7bm0e"]
+
+[node name="DreamTile" type="Node2D" unique_id=1682470856]
+script = ExtResource("1_7bm0e")

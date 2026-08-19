@@ -1,0 +1,323 @@
+[gd_scene format=3 uid="uid://b4xwibo15i5un"]
+
+[ext_resource type="Script" uid="uid://bc7wkaqah00hf" path="res://dreams/dream.gd" id="1_eud56"]
+[ext_resource type="Script" uid="uid://codb6on3w6hhx" path="res://dreams/grid.gd" id="2_sgped"]
+[ext_resource type="PackedScene" uid="uid://deksqm4urundd" path="res://core/graph/dream_tile.tscn" id="2_vycob"]
+[ext_resource type="Resource" uid="uid://cu34tpscs51uc" path="res://core/puzzle/test_random.tres" id="3_sgped"]
+[ext_resource type="PackedScene" uid="uid://cik306it4jy7j" path="res://core/puzzle/puzzzle_ui.tscn" id="4_h6mva"]
+[ext_resource type="Resource" uid="uid://derrus6pqiui4" path="res://core/puzzle/test_random6.tres" id="5_n6jdf"]
+[ext_resource type="PackedScene" uid="uid://ui1n1225e2kn" path="res://core/player/player.tscn" id="6_fngqp"]
+[ext_resource type="PackedScene" uid="uid://hnms6h3d4sah" path="res://core/ui/hud.tscn" id="8_nixe6"]
+[ext_resource type="Shader" uid="uid://7kwuh0e17uu8" path="res://hub/transition.gdshader" id="9_h6mva"]
+
+[sub_resource type="Shader" id="Shader_vycob"]
+code = "shader_type canvas_item;
+
+uniform vec3 colorA : source_color = vec3(0.2, 0.0, 0.1);
+uniform vec3 colorB : source_color = vec3(0.7, 0.3, 0.4);
+uniform vec3 colorC : source_color = vec3(1.0, 0.2, 0.4);
+uniform bool discomode = false;
+uniform float speed : hint_range(0.1, 2.0) = 1.0;
+
+#define iTime (TIME * speed)
+
+float rand(vec4 p) {
+    return fract(sin(p.x*1234. + p.y*2345. + p.z*3456. + p.w*4567.) * 5678.);
+}
+
+float smoothnoise(vec4 p) {
+    const vec2 e = vec2(0.0, 1.0);
+    vec4 i = floor(p);    // integer
+    vec4 f = fract(p);    // fract
+    
+    f = f*f*(3. - 2.*f);
+    
+    return mix(mix(mix(mix(rand(i + e.xxxx),
+                           rand(i + e.yxxx), f.x),
+                       mix(rand(i + e.xyxx),
+                           rand(i + e.yyxx), f.x), f.y),
+                   mix(mix(rand(i + e.xxyx),
+                           rand(i + e.yxyx), f.x),
+                       mix(rand(i + e.xyyx),
+                           rand(i + e.yyyx), f.x), f.y), f.z),
+               mix(mix(mix(rand(i + e.xxxy),
+                           rand(i + e.yxxy), f.x),
+                       mix(rand(i + e.xyxy),
+                           rand(i + e.yyxy), f.x), f.y),
+                   mix(mix(rand(i + e.xxyy),
+                           rand(i + e.yxyy), f.x),
+                       mix(rand(i + e.xyyy),
+                           rand(i + e.yyyy), f.x), f.y), f.z), f.w);
+}
+
+float fbm(vec3 x) {
+    float v = 0.0;
+    float a = 0.5;
+    vec3 shift = vec3(1.0);
+    for (int i = 0; i < 10; ++i) {
+        v += a * smoothnoise(vec4(x, cos(iTime * 0.002) * 200.0));
+        x = x * 2.0 + shift;
+        a *= 0.5;
+    }
+    return v;
+}
+
+vec3 uvTo3D(vec2 uv) {
+    float theta = uv.x * 2.0 * 3.14159265359; // Longitud
+    float phi = uv.y * 3.14159265359; // Latitud
+    float x = sin(phi) * cos(theta);
+    float y = sin(phi) * sin(theta);
+    float z = cos(phi);
+    return vec3(x, y, z);
+}
+
+float max3 (vec3 v) {
+  return max (max (v.x, v.y), v.z);
+}
+
+void fragment() {
+    vec3 col_a = colorA;
+    vec3 col_b = colorB;
+    vec3 col_c = colorC;
+    
+    if(discomode){
+        col_a = vec3(sin(iTime), sin(iTime + 7.0), cos(iTime));
+        col_b = vec3(cos(iTime), cos(iTime + 7.0), sin(iTime));
+        col_c = vec3(sin(iTime), cos(iTime), sin(iTime + 0.5));
+    }
+    
+    vec2 uv = UV;
+    vec3 pos = uvTo3D(uv);
+    
+    pos.y += sin(iTime / 5.0);
+    pos.x += cos(iTime / 5.0);
+    pos.z += sin(iTime / 5.0);
+    
+    float fbmm = fbm(pos);
+    vec3 q = vec3(fbmm, sin(fbmm), cos(fbmm));
+    vec3 r = vec3(fbmm, sin(fbmm), cos(fbmm));
+    float v = fbm(pos + 5.0 * r + iTime * 0.005);
+    
+    vec3 col_top = vec3(1.0);
+    vec3 col_bot = vec3(0.0);
+    
+    vec3 res_color = mix(col_a, col_b, clamp(r, 0.0, 1.0));
+    res_color = mix(res_color, col_c, clamp(q, 0.0, 1.0));
+    
+    float poss = v * 2.0 - 1.0;
+    res_color = mix(res_color, col_top, clamp(poss, 0.0, 1.0));
+    res_color = mix(res_color, col_bot, clamp(-poss, 0.0, 1.0));
+    
+    res_color = res_color / max(max3(res_color), 0.001);
+    
+    res_color = (clamp((0.4 * pow(v, 3.0) + pow(v, 2.0) + 0.5 * v), 0.0, 1.0) * 0.9 + 0.1) * res_color;
+
+    COLOR = vec4(res_color, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sgped"]
+shader = SubResource("Shader_vycob")
+shader_parameter/colorA = Color(0.21195567, 0, 0.0033843378, 1)
+shader_parameter/colorB = Color(0.6666027, 0.35675958, 0.2129727, 1)
+shader_parameter/colorC = Color(1, 0.24472374, 0.2052682, 1)
+shader_parameter/discomode = false
+shader_parameter/speed = 0.40000001574012
+
+[sub_resource type="Environment" id="Environment_n6jdf"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 0.8
+glow_bloom = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fngqp"]
+shader = ExtResource("9_h6mva")
+shader_parameter/scanline_strength = 0.18
+shader_parameter/scanline_count = 180.0
+shader_parameter/aberration = 0.8
+shader_parameter/vignette = 0.35
+
+[node name="Dream_4" type="Node2D" unique_id=1534427132]
+script = ExtResource("1_eud56")
+has_enemy = true
+dream_time = 50
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1005859034]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1635601828]
+material = SubResource("ShaderMaterial_sgped")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Grid" type="Node2D" parent="." unique_id=331183905]
+script = ExtResource("2_sgped")
+
+[node name="Tiles" type="Node2D" parent="." unique_id=1287124755]
+
+[node name="DreamTile" parent="Tiles" unique_id=1682470856 instance=ExtResource("2_vycob")]
+position = Vector2(64, 128)
+
+[node name="DreamTile2" parent="Tiles" unique_id=39206177 instance=ExtResource("2_vycob")]
+position = Vector2(128, 128)
+
+[node name="DreamTile3" parent="Tiles" unique_id=1993433877 instance=ExtResource("2_vycob")]
+position = Vector2(192, 128)
+
+[node name="DreamTile4" parent="Tiles" unique_id=507258313 instance=ExtResource("2_vycob")]
+position = Vector2(256, 128)
+
+[node name="DreamTile5" parent="Tiles" unique_id=1252975047 instance=ExtResource("2_vycob")]
+position = Vector2(320, 128)
+
+[node name="DreamTile6" parent="Tiles" unique_id=635875686 instance=ExtResource("2_vycob")]
+position = Vector2(384, 128)
+enemy = true
+
+[node name="DreamTile7" parent="Tiles" unique_id=528163772 instance=ExtResource("2_vycob")]
+position = Vector2(448, 128)
+
+[node name="DreamTile8" parent="Tiles" unique_id=275723141 instance=ExtResource("2_vycob")]
+position = Vector2(512, 128)
+end = true
+
+[node name="DreamTile9" parent="Tiles" unique_id=2115697834 instance=ExtResource("2_vycob")]
+position = Vector2(64, 192)
+
+[node name="DreamTile10" parent="Tiles" unique_id=512518888 instance=ExtResource("2_vycob")]
+position = Vector2(128, 192)
+
+[node name="DreamTile11" parent="Tiles" unique_id=298401231 instance=ExtResource("2_vycob")]
+position = Vector2(192, 192)
+
+[node name="DreamTile12" parent="Tiles" unique_id=596331430 instance=ExtResource("2_vycob")]
+position = Vector2(256, 192)
+start = true
+
+[node name="DreamTile13" parent="Tiles" unique_id=1772971963 instance=ExtResource("2_vycob")]
+position = Vector2(320, 192)
+
+[node name="DreamTile14" parent="Tiles" unique_id=1762255341 instance=ExtResource("2_vycob")]
+position = Vector2(384, 192)
+
+[node name="DreamTile15" parent="Tiles" unique_id=2031098766 instance=ExtResource("2_vycob")]
+position = Vector2(448, 192)
+
+[node name="DreamTile16" parent="Tiles" unique_id=1237823124 instance=ExtResource("2_vycob")]
+position = Vector2(512, 192)
+
+[node name="DreamTile17" parent="Tiles" unique_id=1841394063 instance=ExtResource("2_vycob")]
+position = Vector2(64, 256)
+
+[node name="DreamTile18" parent="Tiles" unique_id=1443488131 instance=ExtResource("2_vycob")]
+position = Vector2(128, 256)
+puzzle = true
+puzzleDate = ExtResource("3_sgped")
+self_locking = false
+counts_toward_goal = true
+
+[node name="PuzzzleUI" parent="Tiles/DreamTile18" unique_id=1061834889 instance=ExtResource("4_h6mva")]
+
+[node name="DreamTile19" parent="Tiles" unique_id=2114550973 instance=ExtResource("2_vycob")]
+position = Vector2(192, 256)
+enemy = true
+
+[node name="DreamTile20" parent="Tiles" unique_id=1949914643 instance=ExtResource("2_vycob")]
+position = Vector2(256, 256)
+
+[node name="DreamTile21" parent="Tiles" unique_id=1149819443 instance=ExtResource("2_vycob")]
+position = Vector2(320, 256)
+
+[node name="DreamTile22" parent="Tiles" unique_id=797178047 instance=ExtResource("2_vycob")]
+position = Vector2(384, 256)
+
+[node name="DreamTile23" parent="Tiles" unique_id=1715637098 instance=ExtResource("2_vycob")]
+position = Vector2(448, 256)
+
+[node name="DreamTile24" parent="Tiles" unique_id=491144565 instance=ExtResource("2_vycob")]
+position = Vector2(512, 256)
+
+[node name="DreamTile25" parent="Tiles" unique_id=1982768443 instance=ExtResource("2_vycob")]
+position = Vector2(64, 320)
+
+[node name="DreamTile26" parent="Tiles" unique_id=1511220664 instance=ExtResource("2_vycob")]
+position = Vector2(128, 320)
+
+[node name="DreamTile27" parent="Tiles" unique_id=1789332749 instance=ExtResource("2_vycob")]
+position = Vector2(192, 320)
+
+[node name="DreamTile28" parent="Tiles" unique_id=1874810586 instance=ExtResource("2_vycob")]
+position = Vector2(256, 320)
+
+[node name="DreamTile29" parent="Tiles" unique_id=291018603 instance=ExtResource("2_vycob")]
+position = Vector2(320, 320)
+
+[node name="DreamTile30" parent="Tiles" unique_id=642101579 instance=ExtResource("2_vycob")]
+position = Vector2(384, 320)
+puzzle = true
+puzzleDate = ExtResource("3_sgped")
+self_locking = false
+counts_toward_goal = true
+
+[node name="PuzzzleUI" parent="Tiles/DreamTile30" unique_id=406598974 instance=ExtResource("4_h6mva")]
+
+[node name="DreamTile31" parent="Tiles" unique_id=488942783 instance=ExtResource("2_vycob")]
+position = Vector2(448, 320)
+
+[node name="DreamTile32" parent="Tiles" unique_id=324919856 instance=ExtResource("2_vycob")]
+position = Vector2(512, 320)
+enemy = true
+
+[node name="DreamTile33" parent="Tiles" unique_id=785361058 instance=ExtResource("2_vycob")]
+position = Vector2(64, 64)
+puzzle = true
+puzzleDate = ExtResource("5_n6jdf")
+self_locking = false
+counts_toward_goal = true
+
+[node name="PuzzzleUI" parent="Tiles/DreamTile33" unique_id=1023633264 instance=ExtResource("4_h6mva")]
+
+[node name="DreamTile34" parent="Tiles" unique_id=1488898886 instance=ExtResource("2_vycob")]
+position = Vector2(128, 64)
+
+[node name="DreamTile35" parent="Tiles" unique_id=1642136653 instance=ExtResource("2_vycob")]
+position = Vector2(192, 64)
+
+[node name="DreamTile36" parent="Tiles" unique_id=1036665549 instance=ExtResource("2_vycob")]
+position = Vector2(256, 64)
+
+[node name="DreamTile37" parent="Tiles" unique_id=1794005039 instance=ExtResource("2_vycob")]
+position = Vector2(320, 64)
+
+[node name="DreamTile38" parent="Tiles" unique_id=1487842570 instance=ExtResource("2_vycob")]
+position = Vector2(384, 64)
+
+[node name="DreamTile39" parent="Tiles" unique_id=1444596220 instance=ExtResource("2_vycob")]
+position = Vector2(448, 64)
+
+[node name="DreamTile40" parent="Tiles" unique_id=1600415989 instance=ExtResource("2_vycob")]
+position = Vector2(512, 64)
+
+[node name="Player" parent="." unique_id=293460119 instance=ExtResource("6_fngqp")]
+
+[node name="HUD" parent="." unique_id=536998226 instance=ExtResource("8_nixe6")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=276763546]
+environment = SubResource("Environment_n6jdf")
+
+[node name="Overlay" type="CanvasLayer" parent="." unique_id=1100824264]
+layer = 50
+
+[node name="ColorRect" type="ColorRect" parent="Overlay" unique_id=335752038]
+material = SubResource("ShaderMaterial_fngqp")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

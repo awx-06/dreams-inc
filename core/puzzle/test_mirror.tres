@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PuzzleData" format=3 uid="uid://bv2vn24ggvhlb"]
+
+[ext_resource type="Script" uid="uid://tn4iclyvjpbt" path="res://core/puzzle/puzzle_data.gd" id="1_3nlgu"]
+
+[resource]
+script = ExtResource("1_3nlgu")
+modifier = 2
+metadata/_custom_type_script = "uid://tn4iclyvjpbt"
